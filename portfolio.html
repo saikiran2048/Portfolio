@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Saikiran Dasari — SDET Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg:        #090d0f;
+    --bg2:       #0d1417;
+    --bg3:       #111a1d;
+    --border:    #1a2e33;
+    --green:     #00ff88;
+    --cyan:      #00e5ff;
+    --green-dim: #00ff8840;
+    --cyan-dim:  #00e5ff25;
+    --text:      #c8d8db;
+    --text-dim:  #5a7a82;
+    --text-mid:  #8aacb3;
+    --white:     #eaf4f6;
+    --mono:      'JetBrains Mono', monospace;
+    --sans:      'Inter', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ─── SCANLINE OVERLAY ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,255,136,0.012) 2px,
+      rgba(0,255,136,0.012) 4px
+    );
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5vw;
+    height: 60px;
+    background: rgba(9,13,15,0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--green);
+    letter-spacing: 0.05em;
+  }
+
+  .nav-logo span { color: var(--text-dim); }
+
+  nav ul {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  nav ul a {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    text-decoration: none;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  nav ul a:hover { color: var(--green); }
+
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 100px 5vw 60px;
+    gap: 60px;
+    position: relative;
+  }
+
+  #hero::after {
+    content: '';
+    position: absolute;
+    right: -200px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 700px;
+    height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,229,255,0.04) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-text { position: relative; z-index: 1; }
+
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--green);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 28px;
+    height: 1px;
+    background: var(--green);
+  }
+
+  .hero-name {
+    font-family: var(--mono);
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+
+  .hero-name .accent { color: var(--green); }
+
+  .hero-title {
+    font-family: var(--mono);
+    font-size: clamp(14px, 2vw, 18px);
+    color: var(--cyan);
+    margin-bottom: 28px;
+    font-weight: 300;
+  }
+
+  .hero-desc {
+    font-size: 15px;
+    color: var(--text-mid);
+    max-width: 460px;
+    margin-bottom: 40px;
+    line-height: 1.8;
+  }
+
+  .hero-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 36px;
+  }
+
+  .badge {
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+    background: var(--bg2);
+  }
+
+  .badge.active {
+    border-color: var(--green);
+    color: var(--green);
+    background: var(--green-dim);
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 12px 28px;
+    background: var(--green);
+    color: #000;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: 700;
+    transition: background 0.2s, transform 0.1s;
+    display: inline-block;
+  }
+
+  .btn-primary:hover { background: #00ffaa; transform: translateY(-1px); }
+
+  .btn-outline {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 12px 28px;
+    background: transparent;
+    color: var(--cyan);
+    border: 1px solid var(--cyan);
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background 0.2s, transform 0.1s;
+    display: inline-block;
+  }
+
+  .btn-outline:hover {
+    background: var(--cyan-dim);
+    transform: translateY(-1px);
+  }
+
+  /* ─── TERMINAL CARD ─── */
+  .terminal-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .terminal-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 14px;
+    background: var(--bg3);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .t-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+  }
+  .t-dot.r { background: #ff5f56; }
+  .t-dot.y { background: #ffbd2e; }
+  .t-dot.g { background: #27c93f; }
+
+  .terminal-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    margin-left: 8px;
+    letter-spacing: 0.1em;
+  }
+
+  .terminal-body {
+    padding: 20px 20px 24px;
+    font-family: var(--mono);
+    font-size: 12px;
+    line-height: 2;
+  }
+
+  .t-line { display: flex; gap: 8px; }
+  .t-prompt { color: var(--green); user-select: none; }
+  .t-key { color: var(--cyan); }
+  .t-val { color: var(--text); }
+  .t-comment { color: var(--text-dim); }
+  .t-str { color: #f0c674; }
+
+  .photo-wrap {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .photo-frame {
+    width: 200px;
+    height: 200px;
+    border: 2px solid var(--green);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    background: var(--bg3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 40px rgba(0,255,136,0.12);
+  }
+
+  .photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .photo-placeholder {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    text-align: center;
+    padding: 20px;
+  }
+
+  .photo-corner {
+    position: absolute;
+    width: 10px; height: 10px;
+    border-color: var(--cyan);
+    border-style: solid;
+  }
+
+  .photo-corner.tl { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+  .photo-corner.tr { top: -1px; right: -1px; border-width: 2px 2px 0 0; }
+  .photo-corner.bl { bottom: -1px; left: -1px; border-width: 0 0 2px 2px; }
+  .photo-corner.br { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .stat {
+    background: var(--bg2);
+    padding: 14px 10px;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: var(--mono);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--green);
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-dim);
+    font-family: var(--mono);
+  }
+
+  /* ─── SECTIONS ─── */
+  section { padding: 100px 5vw; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 60px;
+  }
+
+  .section-tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--green);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .section-title {
+    font-family: var(--mono);
+    font-size: clamp(22px, 3vw, 32px);
+    font-weight: 700;
+    color: var(--white);
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ─── SKILLS ─── */
+  #skills { background: var(--bg2); }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .skill-group {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 24px;
+    transition: border-color 0.2s;
+  }
+
+  .skill-group:hover { border-color: var(--green); }
+
+  .skill-group-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--cyan);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .skill-group-label::before {
+    content: '▶';
+    font-size: 8px;
+    color: var(--green);
+  }
+
+  .skill-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .pill {
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 5px 12px;
+    border-radius: 2px;
+    border: 1px solid var(--border);
+    color: var(--text-mid);
+    background: var(--bg2);
+    transition: all 0.15s;
+  }
+
+  .pill:hover {
+    border-color: var(--green);
+    color: var(--green);
+    background: var(--green-dim);
+  }
+
+  .pill.highlight {
+    border-color: var(--green);
+    color: var(--green);
+    background: var(--green-dim);
+  }
+
+  /* ─── EXPERIENCE ─── */
+  .exp-timeline {
+    position: relative;
+    padding-left: 32px;
+  }
+
+  .exp-timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    bottom: 8px;
+    width: 1px;
+    background: var(--border);
+  }
+
+  .exp-item {
+    position: relative;
+    margin-bottom: 52px;
+  }
+
+  .exp-item::before {
+    content: '';
+    position: absolute;
+    left: -36px;
+    top: 8px;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 12px var(--green);
+  }
+
+  .exp-item.past::before { background: var(--text-dim); box-shadow: none; }
+
+  .exp-meta {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+  }
+
+  .exp-company {
+    font-family: var(--mono);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--white);
+  }
+
+  .exp-period {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+  }
+
+  .exp-badge {
+    font-family: var(--mono);
+    font-size: 9px;
+    padding: 2px 8px;
+    border: 1px solid var(--cyan);
+    color: var(--cyan);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .exp-role {
+    font-size: 13px;
+    color: var(--cyan);
+    font-family: var(--mono);
+    margin-bottom: 14px;
+  }
+
+  .exp-client {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    margin-bottom: 14px;
+    padding: 4px 10px;
+    border-left: 2px solid var(--green);
+    background: var(--green-dim);
+    display: inline-block;
+  }
+
+  .exp-bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .exp-bullets li {
+    font-size: 13px;
+    color: var(--text-mid);
+    padding-left: 18px;
+    position: relative;
+    line-height: 1.6;
+  }
+
+  .exp-bullets li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--green);
+    font-family: var(--mono);
+    font-size: 16px;
+    line-height: 1.4;
+  }
+
+  .exp-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 14px;
+  }
+
+  .exp-tag {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+    padding: 2px 8px;
+    letter-spacing: 0.08em;
+  }
+
+  /* ─── PROJECTS ─── */
+  #projects { background: var(--bg2); }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 20px;
+  }
+
+  .project-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--green), var(--cyan));
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .project-card:hover { border-color: var(--green); transform: translateY(-2px); }
+  .project-card:hover::before { opacity: 1; }
+
+  .proj-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+  }
+
+  .proj-icon {
+    font-size: 22px;
+    line-height: 1;
+  }
+
+  .proj-type {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+    padding: 2px 8px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .proj-title {
+    font-family: var(--mono);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 10px;
+  }
+
+  .proj-desc {
+    font-size: 13px;
+    color: var(--text-mid);
+    line-height: 1.7;
+    margin-bottom: 18px;
+  }
+
+  .proj-impact {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--green);
+    background: var(--green-dim);
+    border: 1px solid var(--green);
+    padding: 6px 12px;
+    margin-bottom: 14px;
+    display: inline-block;
+  }
+
+  .proj-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .proj-tag {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+    padding: 2px 7px;
+    letter-spacing: 0.06em;
+  }
+
+  /* ─── CONTACT ─── */
+  #contact {
+    background: var(--bg);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #contact::before {
+    content: 'CONNECT';
+    position: absolute;
+    font-family: var(--mono);
+    font-size: clamp(80px, 15vw, 180px);
+    font-weight: 700;
+    color: rgba(0,255,136,0.03);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    pointer-events: none;
+    letter-spacing: 0.1em;
+  }
+
+  .contact-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .contact-tagline {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--text-mid);
+    margin-bottom: 40px;
+  }
+
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-dim);
+    text-decoration: none;
+    padding: 12px 20px;
+    border: 1px solid var(--border);
+    transition: all 0.2s;
+    letter-spacing: 0.1em;
+  }
+
+  .contact-link:hover {
+    border-color: var(--green);
+    color: var(--green);
+    background: var(--green-dim);
+  }
+
+  .contact-link-icon { font-size: 16px; }
+
+  .availability {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--green);
+    padding: 8px 16px;
+    border: 1px solid var(--green);
+    background: var(--green-dim);
+    letter-spacing: 0.1em;
+  }
+
+  .avail-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--green);
+    animation: blink 1.4s infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.2; }
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    padding: 24px 5vw;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  footer p {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+  }
+
+  footer .green { color: var(--green); }
+
+  /* ─── CURSOR BLINK ─── */
+  .cursor {
+    display: inline-block;
+    width: 8px; height: 14px;
+    background: var(--green);
+    animation: blink 1s steps(1) infinite;
+    vertical-align: text-bottom;
+    margin-left: 2px;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    #hero {
+      grid-template-columns: 1fr;
+      padding-top: 80px;
+    }
+    .photo-wrap { display: none; }
+    nav ul { gap: 16px; }
+    .stats-row { display: none; }
+  }
+
+  /* ─── SCROLL ANIMATIONS ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo"><span>~/</span>saikiran_dasari</div>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="about">
+  <div id="hero">
+    <div class="hero-text reveal">
+      <div class="hero-eyebrow">Available for opportunities</div>
+      <h1 class="hero-name">Saikiran<br><span class="accent">Dasari</span></h1>
+      <div class="hero-title">// SDET &amp; Automation QA Consultant<span class="cursor"></span></div>
+      <p class="hero-desc">
+        Senior-scope automation engineer with 4+ years building enterprise-grade test frameworks 
+        for BFSI giants — DBS Bank, USAA, and General Motors Financial. Specializing in 
+        end-to-end quality engineering: API contracts, Big Data pipelines, security testing, 
+        and CI/CD-integrated frameworks.
+      </p>
+      <div class="hero-badges">
+        <span class="badge active">Java</span>
+        <span class="badge active">Selenium WebDriver</span>
+        <span class="badge active">REST Assured</span>
+        <span class="badge active">Cucumber BDD</span>
+        <span class="badge">Kafka</span>
+        <span class="badge">Jenkins</span>
+        <span class="badge">Azure DevOps</span>
+        <span class="badge">BFSI Domain</span>
+      </div>
+      <div class="hero-cta">
+        <a href="#contact" class="btn-primary">Get In Touch</a>
+        <a href="#projects" class="btn-outline">View Projects</a>
+      </div>
+    </div>
+
+    <div class="photo-wrap reveal">
+      <div class="photo-frame">
+        <div class="photo-placeholder">
+          <img src="https://media.licdn.com/dms/image/v2/D5603AQFIRA57M57IRg/profile-displayphoto-scale_400_400/B56ZllnM5lJ0Ag-/0/1758346401073?e=1782950400&v=beta&t=-UO2fA7XmC5FZL9jbFoGH6i8looh8VRTZxQaCtvKhLw" alt="Saikiran's Photo" />
+        </div>
+        <div class="photo-corner tl"></div>
+        <div class="photo-corner tr"></div>
+        <div class="photo-corner bl"></div>
+        <div class="photo-corner br"></div>
+      </div>
+
+      <div class="terminal-card" style="width:100%">
+        <div class="terminal-bar">
+          <div class="t-dot r"></div>
+          <div class="t-dot y"></div>
+          <div class="t-dot g"></div>
+          <span class="terminal-label">sdet_profile.json</span>
+        </div>
+        <div class="terminal-body">
+          <div class="t-line"><span class="t-prompt">$</span><span class="t-key">cat</span><span class="t-val">profile.json</span></div>
+          <div class="t-line"><span class="t-comment">{</span></div>
+          <div class="t-line">&nbsp;&nbsp;<span class="t-key">"experience"</span>: <span class="t-str">"4+ years"</span>,</div>
+          <div class="t-line">&nbsp;&nbsp;<span class="t-key">"location"</span>: <span class="t-str">"Hyderabad, IN"</span>,</div>
+          <div class="t-line">&nbsp;&nbsp;<span class="t-key">"current"</span>: <span class="t-str">"Deloitte"</span>,</div>
+          <div class="t-line">&nbsp;&nbsp;<span class="t-key">"clients"</span>: [</div>
+          <div class="t-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-str">"GMF"</span>, <span class="t-str">"DBS"</span>, <span class="t-str">"USAA"</span></div>
+          <div class="t-line">&nbsp;&nbsp;],</div>
+          <div class="t-line">&nbsp;&nbsp;<span class="t-key">"status"</span>: <span style="color:var(--green)">"open_to_work"</span></div>
+          <div class="t-line"><span class="t-comment">}</span></div>
+        </div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat"><span class="stat-num">4+</span><span class="stat-label">Years</span></div>
+        <div class="stat"><span class="stat-num">3</span><span class="stat-label">BFSI Clients</span></div>
+        <div class="stat"><span class="stat-num">85%</span><span class="stat-label">Coverage↑</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-header reveal">
+    <span class="section-tag">02</span>
+    <h2 class="section-title">Tech Stack</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="skills-grid">
+    <div class="skill-group reveal">
+      <div class="skill-group-label">Core Automation</div>
+      <div class="skill-pills">
+        <span class="pill highlight">Java</span>
+        <span class="pill highlight">Selenium WebDriver</span>
+        <span class="pill highlight">Cucumber BDD</span>
+        <span class="pill">TestNG</span>
+        <span class="pill">Page Object Model</span>
+        <span class="pill">Page Factory</span>
+      </div>
+    </div>
+    <div class="skill-group reveal">
+      <div class="skill-group-label">API Testing</div>
+      <div class="skill-pills">
+        <span class="pill highlight">REST Assured</span>
+        <span class="pill">Postman</span>
+        <span class="pill">JSON Schema Validation</span>
+        <span class="pill">OAuth 2.0</span>
+        <span class="pill">SSL/TLS Testing</span>
+        <span class="pill">mTLS Security</span>
+      </div>
+    </div>
+    <div class="skill-group reveal">
+      <div class="skill-group-label">CI/CD &amp; Build</div>
+      <div class="skill-pills">
+        <span class="pill highlight">Jenkins</span>
+        <span class="pill highlight">Azure DevOps</span>
+        <span class="pill">Maven</span>
+        <span class="pill">Git</span>
+        <span class="pill">GitHub Actions</span>
+        <span class="pill">Job DSL</span>
+      </div>
+    </div>
+    <div class="skill-group reveal">
+      <div class="skill-group-label">Big Data &amp; Messaging</div>
+      <div class="skill-pills">
+        <span class="pill highlight">Apache Kafka</span>
+        <span class="pill">Redis</span>
+        <span class="pill">EmbeddedKafka</span>
+        <span class="pill">Testcontainers</span>
+        <span class="pill">DLQ Testing</span>
+        <span class="pill">Consumer Lag</span>
+      </div>
+    </div>
+    <div class="skill-group reveal">
+      <div class="skill-group-label">Frameworks &amp; Libraries</div>
+      <div class="skill-pills">
+        <span class="pill">Log4j2</span>
+        <span class="pill">Extent Reports</span>
+        <span class="pill">Apache POI</span>
+        <span class="pill">Jackson</span>
+        <span class="pill">HikariCP</span>
+        <span class="pill">Pact (Contract)</span>
+      </div>
+    </div>
+    <div class="skill-group reveal">
+      <div class="skill-group-label">Emerging / Upskilling</div>
+      <div class="skill-pills">
+        <span class="pill highlight">AI/GenAI for QA</span>
+        <span class="pill highlight">GitHub Copilot</span>
+        <span class="pill">n8n Automation</span>
+        <span class="pill">ISTQB CT-AI</span>
+        <span class="pill">Claude Code</span>
+        <span class="pill">AWS Cloud Practitioner</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-header reveal">
+    <span class="section-tag">03</span>
+    <h2 class="section-title">Experience</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="exp-timeline">
+
+    <!-- Deloitte -->
+    <div class="exp-item reveal">
+      <div class="exp-meta">
+        <span class="exp-company">Deloitte</span>
+        <span class="exp-period">2023 — PRESENT</span>
+        <span class="exp-badge">Current</span>
+      </div>
+      <div class="exp-role">SDET / Automation QA Consultant</div>
+      <div class="exp-client">Client: General Motors Financial (GMF)</div>
+      <ul class="exp-bullets">
+        <li>Architected multi-layer automation for GMF's DDC (Due Date Change) email compliance suite — covering UI, API contract, business rules, CFPB/TILA, CAN-SPAM, and audit trail layers.</li>
+        <li>Built a 9-phase enterprise Selenium framework from scratch: POM/Page Factory, ThreadLocal WebDriver for parallel execution, Log4j2/Extent Reports, IRetryAnalyzer, and a Jenkins declarative pipeline with Job DSL.</li>
+        <li>Integrated REST Assured API layer with HikariCP database validation for end-to-end data integrity checks.</li>
+        <li>Owns Post Production Validation (PPV) with full deployment sign-off authority — senior-level responsibility at 4 years.</li>
+        <li>Implemented email deliverability testing: SPF, DKIM, DMARC validation, inbox placement, and bounce handling.</li>
+      </ul>
+      <div class="exp-tags">
+        <span class="exp-tag">Java</span>
+        <span class="exp-tag">Selenium</span>
+        <span class="exp-tag">REST Assured</span>
+        <span class="exp-tag">Jenkins</span>
+        <span class="exp-tag">HikariCP</span>
+        <span class="exp-tag">Azure DevOps</span>
+        <span class="exp-tag">CFPB Compliance</span>
+      </div>
+    </div>
+
+    <!-- TCS / DBS -->
+    <div class="exp-item past reveal">
+      <div class="exp-meta">
+        <span class="exp-company">Tata Consultancy Services</span>
+        <span class="exp-period">2021 — 2023</span>
+      </div>
+      <div class="exp-role">SDET / QA Engineer</div>
+      <div class="exp-client">Client: DBS Bank — Enterprise Backend Banking</div>
+      <ul class="exp-bullets">
+        <li>Built a data reconciliation framework for Big Data pipeline validation across Kafka, Redis, and downstream systems — a capability typically seen at the 6–7 year seniority band.</li>
+        <li>Designed SSL/TLS and mTLS security test suites for encrypted API channels in high-security banking environments.</li>
+        <li>Implemented event-driven async validation patterns for Kafka consumer lag monitoring and DLQ testing.</li>
+        <li>Validated real-time data consistency across distributed microservices using EmbeddedKafka and Testcontainers.</li>
+      </ul>
+      <div class="exp-tags">
+        <span class="exp-tag">Kafka</span>
+        <span class="exp-tag">Redis</span>
+        <span class="exp-tag">mTLS</span>
+        <span class="exp-tag">Testcontainers</span>
+        <span class="exp-tag">REST Assured</span>
+        <span class="exp-tag">Java</span>
+      </div>
+    </div>
+
+    <!-- TCS / USAA -->
+    <div class="exp-item past reveal">
+      <div class="exp-meta">
+        <span class="exp-company">Tata Consultancy Services</span>
+        <span class="exp-period">2020 — 2021</span>
+      </div>
+      <div class="exp-role">QA Engineer</div>
+      <div class="exp-client">Client: USAA Bank — Core Banking</div>
+      <ul class="exp-bullets">
+        <li>Developed automation suites for core banking transaction flows using Selenium WebDriver and Cucumber BDD.</li>
+        <li>Contributed to API testing for banking microservices, establishing REST Assured test patterns used by the team.</li>
+        <li>Mentored junior SDETs on framework best practices, data-driven testing, and CI/CD pipeline integration.</li>
+      </ul>
+      <div class="exp-tags">
+        <span class="exp-tag">Selenium</span>
+        <span class="exp-tag">Cucumber</span>
+        <span class="exp-tag">TestNG</span>
+        <span class="exp-tag">REST Assured</span>
+        <span class="exp-tag">Maven</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-header reveal">
+    <span class="section-tag">04</span>
+    <h2 class="section-title">Projects &amp; Achievements</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="projects-grid">
+
+    <div class="project-card reveal">
+      <div class="proj-header">
+        <div class="proj-icon">🏗️</div>
+        <span class="proj-type">Framework</span>
+      </div>
+      <div class="proj-title">Enterprise Selenium Framework</div>
+      <p class="proj-desc">9-phase production-grade framework built from ground up. Covers POM, ThreadLocal WebDriver, parallel Cucumber execution, retry mechanism via IRetryAnalyzer, data-driven testing with Apache POI &amp; Jackson, and Jenkins Job DSL automation.</p>
+      <div class="proj-impact">↑ 85% test coverage | Zero flaky test escapes</div>
+      <div class="proj-stack">
+        <span class="proj-tag">Java</span>
+        <span class="proj-tag">Selenium</span>
+        <span class="proj-tag">Cucumber BDD</span>
+        <span class="proj-tag">TestNG</span>
+        <span class="proj-tag">Log4j2</span>
+        <span class="proj-tag">Extent Reports</span>
+        <span class="proj-tag">Jenkins</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="proj-header">
+        <div class="proj-icon">📧</div>
+        <span class="proj-type">Compliance</span>
+      </div>
+      <div class="proj-title">GMF Email Compliance Suite</div>
+      <p class="proj-desc">Full test plan (GMF-EMAIL-DDC-001) for Due Date Change email flows. Multi-layer coverage: UI automation, API contract testing, CFPB/TILA &amp; CAN-SPAM compliance, SPF/DKIM/DMARC deliverability, and complete audit trail validation.</p>
+      <div class="proj-impact">Regulatory sign-off for GMF production releases</div>
+      <div class="proj-stack">
+        <span class="proj-tag">REST Assured</span>
+        <span class="proj-tag">Selenium</span>
+        <span class="proj-tag">CFPB/TILA</span>
+        <span class="proj-tag">CAN-SPAM</span>
+        <span class="proj-tag">SPF/DKIM</span>
+        <span class="proj-tag">HikariCP</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="proj-header">
+        <div class="proj-icon">🔄</div>
+        <span class="proj-type">Big Data QA</span>
+      </div>
+      <div class="proj-title">Kafka Pipeline Reconciliation Framework</div>
+      <p class="proj-desc">Data reconciliation framework for DBS Bank validating message integrity across Kafka topics, Redis caches, and downstream databases. Async consumer lag monitoring, DLQ testing, and event-driven validation patterns.</p>
+      <div class="proj-impact">Real-time consistency across distributed microservices</div>
+      <div class="proj-stack">
+        <span class="proj-tag">Apache Kafka</span>
+        <span class="proj-tag">Redis</span>
+        <span class="proj-tag">EmbeddedKafka</span>
+        <span class="proj-tag">Testcontainers</span>
+        <span class="proj-tag">Java</span>
+        <span class="proj-tag">Pact</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="proj-header">
+        <div class="proj-icon">🔐</div>
+        <span class="proj-type">Security QA</span>
+      </div>
+      <div class="proj-title">SSL/TLS &amp; mTLS Security Test Suite</div>
+      <p class="proj-desc">Comprehensive security testing framework for encrypted API channels at DBS Bank. Certificate validation, mutual TLS handshake testing, cipher suite coverage, and automated regression for encrypted banking microservice endpoints.</p>
+      <div class="proj-impact">Zero security escapes in production releases</div>
+      <div class="proj-stack">
+        <span class="proj-tag">mTLS</span>
+        <span class="proj-tag">SSL/TLS</span>
+        <span class="proj-tag">REST Assured</span>
+        <span class="proj-tag">Java</span>
+        <span class="proj-tag">Postman</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="proj-header">
+        <div class="proj-icon">🤖</div>
+        <span class="proj-type">AI / Automation</span>
+      </div>
+      <div class="proj-title">AI-Powered Job Alert System</div>
+      <p class="proj-desc">Self-hosted n8n pipeline on Railway using Apify scraping, GPT-4o-mini resume-JD matching, and WhatsApp delivery via Twilio. Auto-filters GCC &amp; product company openings in Hyderabad with relevance scoring against personal resume.</p>
+      <div class="proj-impact">Daily curated alerts — 0 manual job board browsing</div>
+      <div class="proj-stack">
+        <span class="proj-tag">n8n</span>
+        <span class="proj-tag">Apify</span>
+        <span class="proj-tag">GPT-4o-mini</span>
+        <span class="proj-tag">Twilio</span>
+        <span class="proj-tag">Railway</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="proj-header">
+        <div class="proj-icon">📚</div>
+        <span class="proj-type">Content / Teaching</span>
+      </div>
+      <div class="proj-title">SDET Educational Series</div>
+      <p class="proj-desc">Published "Java for SDETs" infographic series — Part 8 covers Apache Kafka from a QA perspective: EmbeddedKafka, Testcontainers, DLQ, contract testing with Pact, CI/CD best practices. Designed for junior SDET mentorship and knowledge sharing.</p>
+      <div class="proj-impact">Community knowledge sharing for QA engineers</div>
+      <div class="proj-stack">
+        <span class="proj-tag">Technical Writing</span>
+        <span class="proj-tag">Kafka</span>
+        <span class="proj-tag">Pact</span>
+        <span class="proj-tag">Mentorship</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="section-header reveal" style="justify-content:center; margin-bottom:16px;">
+      <span class="section-tag">05</span>
+      <h2 class="section-title">Contact</h2>
+    </div>
+    <p class="contact-tagline reveal">
+      Targeting GCC &amp; product companies in Hyderabad.<br>
+      Open to Senior SDET / Lead QA Engineering roles.
+    </p>
+    <div class="availability reveal" style="margin-bottom:36px; display:inline-flex;">
+      <div class="avail-dot"></div>
+      AVAILABLE — Q3 2026 TARGET
+    </div>
+    <div class="contact-links reveal">
+      <a href="mailto:saikiran@email.com" class="contact-link">
+        <span class="contact-link-icon">✉</span> EMAIL
+      </a>
+      <a href="https://linkedin.com/in/saikiran-dasari" class="contact-link" target="_blank">
+        <span class="contact-link-icon">in</span> LINKEDIN
+      </a>
+      <a href="https://github.com/saikiran-dasari" class="contact-link" target="_blank">
+        <span class="contact-link-icon">⌥</span> GITHUB
+      </a>
+      <a href="#" class="contact-link">
+        <span class="contact-link-icon">↓</span> RESUME
+      </a>
+    </div>
+    <p class="reveal" style="font-family:var(--mono); font-size:11px; color:var(--text-dim); margin-top:20px;">
+      Priority targets: Experian GIC · Citi CGIT · Synchrony · JP Morgan · Walmart GTC
+    </p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 <span class="green">Saikiran Dasari</span> — SDET Portfolio</p>
+  <p>Built with precision. Tested with purpose.</p>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Typewriter for hero title
+  const titleEl = document.querySelector('.hero-title');
+  const fullText = '// SDET & Automation QA Consultant';
+  titleEl.innerHTML = '<span class="cursor"></span>';
+  let i = 0;
+  const type = () => {
+    if (i <= fullText.length) {
+      titleEl.innerHTML = fullText.slice(0, i) + '<span class="cursor"></span>';
+      i++;
+      setTimeout(type, 45);
+    }
+  };
+  setTimeout(type, 600);
+</script>
+</body>
+</html>
