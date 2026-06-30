@@ -94,6 +94,32 @@
 
   nav ul a:hover { color: var(--green); }
 
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 28px;
+    height: 28px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 110;
+  }
+
+  .nav-toggle span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: var(--green);
+    transition: transform 0.25s, opacity 0.2s;
+  }
+
+  .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-toggle.open span:nth-child(2) { opacity: 0; }
+  .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
   /* ─── HERO ─── */
   #hero {
     min-height: 100vh;
@@ -157,6 +183,7 @@
     color: var(--cyan);
     margin-bottom: 28px;
     font-weight: 300;
+    min-height: 24px;
   }
 
   .hero-desc {
@@ -271,13 +298,19 @@
   }
 
   .terminal-body {
-    padding: 20px 20px 24px;
+    padding: 18px 20px 22px;
     font-family: var(--mono);
-    font-size: 12px;
-    line-height: 2;
+    font-size: 11.5px;
+    line-height: 1.85;
+    overflow-x: auto;
+    max-height: 420px;
+    overflow-y: auto;
   }
 
-  .t-line { display: flex; gap: 8px; }
+  .terminal-body::-webkit-scrollbar { width: 6px; }
+  .terminal-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  .t-line { display: flex; gap: 8px; white-space: nowrap; }
   .t-prompt { color: var(--green); user-select: none; }
   .t-key { color: var(--cyan); }
   .t-val { color: var(--text); }
@@ -587,6 +620,17 @@
     letter-spacing: 0.08em;
   }
 
+  .exp-award {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: #f0c674;
+    border: 1px solid #f0c67450;
+    background: rgba(240,198,116,0.06);
+    padding: 4px 10px;
+    margin-top: 14px;
+    display: inline-block;
+  }
+
   /* ─── PROJECTS ─── */
   #projects { background: var(--bg2); }
 
@@ -680,6 +724,44 @@
     border: 1px solid var(--border);
     padding: 2px 7px;
     letter-spacing: 0.06em;
+  }
+
+  /* ─── EDUCATION ─── */
+  #education {
+    background: var(--bg);
+  }
+
+  .edu-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-left: 2px solid var(--green);
+    padding: 28px 30px;
+    max-width: 640px;
+    border-radius: 2px;
+  }
+
+  .edu-degree {
+    font-family: var(--mono);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+
+  .edu-school {
+    font-size: 13px;
+    color: var(--text-mid);
+    margin-bottom: 10px;
+  }
+
+  .edu-cgpa {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--green);
+    background: var(--green-dim);
+    border: 1px solid var(--green);
+    padding: 4px 10px;
+    display: inline-block;
   }
 
   /* ─── CONTACT ─── */
@@ -805,14 +887,88 @@
   }
 
   /* ─── RESPONSIVE ─── */
-  @media (max-width: 768px) {
+  @media (max-width: 900px) {
     #hero {
       grid-template-columns: 1fr;
-      padding-top: 80px;
+      padding-top: 90px;
+      gap: 40px;
+      text-align: left;
     }
-    .photo-wrap { display: none; }
-    nav ul { gap: 16px; }
-    .stats-row { display: none; }
+    .photo-wrap { order: -1; }
+    .photo-frame { width: 150px; height: 150px; }
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; height: 56px; }
+
+    .nav-toggle { display: flex; }
+
+    nav ul {
+      position: fixed;
+      top: 56px;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      gap: 0;
+      background: rgba(9,13,15,0.98);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    nav ul.open { max-height: 320px; }
+
+    nav ul li { width: 100%; }
+
+    nav ul a {
+      display: block;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+    }
+
+    section { padding: 70px 20px; }
+
+    #hero { padding: 80px 20px 50px; }
+
+    .hero-name { font-size: clamp(30px, 9vw, 44px); }
+
+    .hero-desc { max-width: 100%; font-size: 14px; }
+
+    .hero-cta { flex-direction: column; }
+    .hero-cta a { text-align: center; width: 100%; }
+
+    .photo-frame { width: 130px; height: 130px; }
+
+    .terminal-body { font-size: 11px; }
+
+    .stats-row { grid-template-columns: repeat(3, 1fr); }
+    .stat-num { font-size: 18px; }
+    .stat-label { font-size: 8px; }
+
+    .skills-grid { grid-template-columns: 1fr; }
+
+    .projects-grid { grid-template-columns: 1fr; }
+
+    .exp-timeline { padding-left: 24px; }
+    .exp-item::before { left: -28px; }
+    .exp-company { font-size: 14px; }
+
+    .section-header { margin-bottom: 40px; }
+
+    .edu-card { padding: 22px; }
+
+    .contact-links { flex-direction: column; align-items: stretch; }
+    .contact-link { justify-content: center; }
+
+    footer { flex-direction: column; text-align: center; }
+  }
+
+  @media (max-width: 420px) {
+    .hero-badges { gap: 6px; }
+    .badge { font-size: 9px; padding: 3px 8px; }
   }
 
   /* ─── SCROLL ANIMATIONS ─── */
@@ -832,11 +988,15 @@
 <!-- NAV -->
 <nav>
   <div class="nav-logo"><span>~/</span>saikiran_dasari</div>
-  <ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul id="navMenu">
     <li><a href="#about">About</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="#experience">Experience</a></li>
     <li><a href="#projects">Projects</a></li>
+    <li><a href="#education">Education</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
 </nav>
@@ -849,16 +1009,19 @@
       <h1 class="hero-name">Saikiran<br><span class="accent">Dasari</span></h1>
       <div class="hero-title">// SDET &amp; Automation QA Consultant<span class="cursor"></span></div>
       <p class="hero-desc">
-        Senior-scope automation engineer with 4+ years building enterprise-grade test frameworks 
-        for BFSI giants — DBS Bank, USAA, and General Motors Financial. Specializing in 
-        end-to-end quality engineering: API contracts, Big Data pipelines, security testing, 
-        and CI/CD-integrated frameworks.
+        SDET with 4 years of experience in test automation and quality engineering for
+        enterprise banking and financial services platforms at Deloitte and TCS. Owned
+        automation frameworks in Java using Selenium, Playwright, Cucumber BDD, TestNG,
+        and Karate across UI, API, and data layers — with hands-on Kafka reconciliation,
+        performance/chaos engineering, and SSL/TLS security testing.
       </p>
       <div class="hero-badges">
         <span class="badge active">Java</span>
         <span class="badge active">Selenium WebDriver</span>
         <span class="badge active">REST Assured</span>
         <span class="badge active">Cucumber BDD</span>
+        <span class="badge">Playwright</span>
+        <span class="badge">Karate</span>
         <span class="badge">Kafka</span>
         <span class="badge">Jenkins</span>
         <span class="badge">Azure DevOps</span>
@@ -891,12 +1054,27 @@
         <div class="terminal-body">
           <div class="t-line"><span class="t-prompt">$</span><span class="t-key">cat</span><span class="t-val">profile.json</span></div>
           <div class="t-line"><span class="t-comment">{</span></div>
+          <div class="t-line">&nbsp;&nbsp;<span class="t-key">"name"</span>: <span class="t-str">"Saikiran Dasari"</span>,</div>
+          <div class="t-line">&nbsp;&nbsp;<span class="t-key">"role"</span>: <span class="t-str">"SDET / Automation QA"</span>,</div>
           <div class="t-line">&nbsp;&nbsp;<span class="t-key">"experience"</span>: <span class="t-str">"4+ years"</span>,</div>
           <div class="t-line">&nbsp;&nbsp;<span class="t-key">"location"</span>: <span class="t-str">"Hyderabad, IN"</span>,</div>
-          <div class="t-line">&nbsp;&nbsp;<span class="t-key">"current"</span>: <span class="t-str">"Deloitte"</span>,</div>
-          <div class="t-line">&nbsp;&nbsp;<span class="t-key">"clients"</span>: [</div>
-          <div class="t-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-str">"GMF"</span>, <span class="t-str">"DBS"</span>, <span class="t-str">"USAA"</span></div>
+          <div class="t-line">&nbsp;&nbsp;<span class="t-key">"domain"</span>: <span class="t-str">"BFSI / Banking"</span>,</div>
+          <div class="t-line">&nbsp;&nbsp;<span class="t-key">"current_employer"</span>: <span class="t-str">"Deloitte"</span>,</div>
+          <div class="t-line">&nbsp;&nbsp;<span class="t-key">"current_client"</span>: <span class="t-str">"GM Financial"</span>,</div>
+          <div class="t-line">&nbsp;&nbsp;<span class="t-key">"clients_served"</span>: [</div>
+          <div class="t-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-str">"GMF"</span>, <span class="t-str">"DBS Bank"</span>, <span class="t-str">"USAA"</span></div>
           <div class="t-line">&nbsp;&nbsp;],</div>
+          <div class="t-line">&nbsp;&nbsp;<span class="t-key">"core_stack"</span>: [</div>
+          <div class="t-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-str">"Java"</span>, <span class="t-str">"Selenium"</span>, <span class="t-str">"REST Assured"</span>,</div>
+          <div class="t-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-str">"Playwright"</span>, <span class="t-str">"Kafka"</span></div>
+          <div class="t-line">&nbsp;&nbsp;],</div>
+          <!-- <div class="t-line">&nbsp;&nbsp;<span class="t-key">"highlights"</span>: [</div>
+          <div class="t-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-str">"Deloitte Applause Award"</span>,</div>
+          <div class="t-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-str">"300 TPS perf sign-off"</span>,</div>
+          <div class="t-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-str">"Mentored 3 SDETs"</span></div>
+          <div class="t-line">&nbsp;&nbsp;],</div> -->
+          <!-- <div class="t-line">&nbsp;&nbsp;<span class="t-key">"education"</span>: <span class="t-str">"B.E., Osmania Univ."</span>,</div> -->
+          <div class="t-line">&nbsp;&nbsp;<span class="t-key">"contact"</span>: <span class="t-str">"saikirandasari314@gmail.com"</span>,</div>
           <div class="t-line">&nbsp;&nbsp;<span class="t-key">"status"</span>: <span style="color:var(--green)">"open_to_work"</span></div>
           <div class="t-line"><span class="t-comment">}</span></div>
         </div>
@@ -925,65 +1103,80 @@
       <div class="skill-pills">
         <span class="pill highlight">Java</span>
         <span class="pill highlight">Selenium WebDriver</span>
-        <span class="pill highlight">Cucumber BDD</span>
+        <span class="pill highlight">Playwright</span>
+        <span class="pill">Cucumber BDD</span>
         <span class="pill">TestNG</span>
+        <span class="pill">JUnit</span>
         <span class="pill">Page Object Model</span>
-        <span class="pill">Page Factory</span>
       </div>
     </div>
     <div class="skill-group reveal">
       <div class="skill-group-label">API Testing</div>
       <div class="skill-pills">
         <span class="pill highlight">REST Assured</span>
+        <span class="pill highlight">Karate</span>
         <span class="pill">Postman</span>
-        <span class="pill">JSON Schema Validation</span>
-        <span class="pill">OAuth 2.0</span>
+        <span class="pill">Schema / Contract Validation</span>
         <span class="pill">SSL/TLS Testing</span>
-        <span class="pill">mTLS Security</span>
+        <span class="pill">JKS Keystores</span>
       </div>
     </div>
     <div class="skill-group reveal">
       <div class="skill-group-label">CI/CD &amp; Build</div>
       <div class="skill-pills">
-        <span class="pill highlight">Jenkins</span>
+        <span class="pill highlight">Jenkins (Groovy)</span>
         <span class="pill highlight">Azure DevOps</span>
         <span class="pill">Maven</span>
-        <span class="pill">Git</span>
+        <span class="pill">Git / Bitbucket</span>
         <span class="pill">GitHub Actions</span>
-        <span class="pill">Job DSL</span>
       </div>
     </div>
     <div class="skill-group reveal">
-      <div class="skill-group-label">Big Data &amp; Messaging</div>
+      <div class="skill-group-label">Data &amp; Messaging</div>
       <div class="skill-pills">
         <span class="pill highlight">Apache Kafka</span>
         <span class="pill">Redis</span>
-        <span class="pill">EmbeddedKafka</span>
-        <span class="pill">Testcontainers</span>
-        <span class="pill">DLQ Testing</span>
-        <span class="pill">Consumer Lag</span>
+        <span class="pill">Oracle / PostgreSQL / MariaDB</span>
+        <span class="pill">Data Reconciliation</span>
       </div>
     </div>
     <div class="skill-group reveal">
-      <div class="skill-group-label">Frameworks &amp; Libraries</div>
+      <div class="skill-group-label">Performance &amp; Observability</div>
       <div class="skill-pills">
-        <span class="pill">Log4j2</span>
-        <span class="pill">Extent Reports</span>
-        <span class="pill">Apache POI</span>
-        <span class="pill">Jackson</span>
-        <span class="pill">HikariCP</span>
-        <span class="pill">Pact (Contract)</span>
+        <span class="pill highlight">JMeter</span>
+        <span class="pill">Chaos Testing</span>
+        <span class="pill">Grafana</span>
+        <span class="pill">Kibana</span>
+        <span class="pill">Log Analysis</span>
       </div>
     </div>
     <div class="skill-group reveal">
-      <div class="skill-group-label">Emerging / Upskilling</div>
+      <div class="skill-group-label">Release &amp; Governance</div>
       <div class="skill-pills">
-        <span class="pill highlight">AI/GenAI for QA</span>
+        <span class="pill">PPV</span>
+        <span class="pill">Rollback Testing</span>
+        <span class="pill">UAT Support</span>
+        <span class="pill">Flyway Migrations</span>
+      </div>
+    </div>
+    <div class="skill-group reveal">
+      <div class="skill-group-label">Emerging / AI-Assisted Testing</div>
+      <div class="skill-pills">
         <span class="pill highlight">GitHub Copilot</span>
+        <span class="pill highlight">Claude</span>
+        <!-- <span class="pill">AWS Cloud Practitioner</span> -->
         <span class="pill">n8n Automation</span>
-        <span class="pill">ISTQB CT-AI</span>
-        <span class="pill">Claude Code</span>
-        <span class="pill">AWS Cloud Practitioner</span>
+      </div>
+    </div>
+    <div class="skill-group reveal">
+      <div class="skill-group-label">Process &amp; Tools</div>
+      <div class="skill-pills">
+        <span class="pill">Agile / Scrum</span>
+        <span class="pill">STLC</span>
+        <span class="pill">Shift-Left Testing</span>
+        <span class="pill">Jira / Zephyr</span>
+        <span class="pill">Confluence</span>
+        <span class="pill">Extent Reports</span>
       </div>
     </div>
   </div>
@@ -999,54 +1192,63 @@
 
   <div class="exp-timeline">
 
-    <!-- Deloitte -->
+    <!-- Deloitte / GMF -->
     <div class="exp-item reveal">
       <div class="exp-meta">
         <span class="exp-company">Deloitte</span>
-        <span class="exp-period">2023 — PRESENT</span>
+        <span class="exp-period">SEP 2025 — PRESENT</span>
         <span class="exp-badge">Current</span>
       </div>
-      <div class="exp-role">SDET / Automation QA Consultant</div>
+      <div class="exp-role">Automation QA Consultant</div>
       <div class="exp-client">Client: General Motors Financial (GMF)</div>
       <ul class="exp-bullets">
-        <li>Architected multi-layer automation for GMF's DDC (Due Date Change) email compliance suite — covering UI, API contract, business rules, CFPB/TILA, CAN-SPAM, and audit trail layers.</li>
-        <li>Built a 9-phase enterprise Selenium framework from scratch: POM/Page Factory, ThreadLocal WebDriver for parallel execution, Log4j2/Extent Reports, IRetryAnalyzer, and a Jenkins declarative pipeline with Job DSL.</li>
-        <li>Integrated REST Assured API layer with HikariCP database validation for end-to-end data integrity checks.</li>
-        <li>Owns Post Production Validation (PPV) with full deployment sign-off authority — senior-level responsibility at 4 years.</li>
-        <li>Implemented email deliverability testing: SPF, DKIM, DMARC validation, inbox placement, and bounce handling.</li>
+        <li>Built and owned a Selenium-Java-TestNG regression framework for vehicle loan payment modules — ~85% automated coverage within two sprints.</li>
+        <li>Implemented Playwright (TypeScript) scripts for cross-browser coverage alongside Selenium.</li>
+        <li>Developed REST Assured API suites for request/response validation and data consistency checks against GMF backend services.</li>
+        <li>Managed test execution and reporting via Azure DevOps Test Plans, delivering sprint-level quality dashboards.</li>
+        <li>Validated data integrity via SQL (Oracle, PostgreSQL); caught data-mapping defects missed by UI-layer tests.</li>
+        <li>Owned defect triage in daily standups — lifecycle, severity, and status.</li>
+        <li>Executed Smoke, Sanity, Regression, and UAT cycles; raised quality risks during sprint refinement to reduce rework.</li>
       </ul>
       <div class="exp-tags">
         <span class="exp-tag">Java</span>
         <span class="exp-tag">Selenium</span>
+        <span class="exp-tag">Playwright</span>
         <span class="exp-tag">REST Assured</span>
-        <span class="exp-tag">Jenkins</span>
-        <span class="exp-tag">HikariCP</span>
         <span class="exp-tag">Azure DevOps</span>
-        <span class="exp-tag">CFPB Compliance</span>
+        <span class="exp-tag">SQL</span>
       </div>
+      <div class="exp-award">🏆 Applause Award — Deloitte, for GMF quality contributions</div>
     </div>
 
     <!-- TCS / DBS -->
     <div class="exp-item past reveal">
       <div class="exp-meta">
         <span class="exp-company">Tata Consultancy Services</span>
-        <span class="exp-period">2021 — 2023</span>
+        <span class="exp-period">MAR 2023 — AUG 2025</span>
       </div>
-      <div class="exp-role">SDET / QA Engineer</div>
-      <div class="exp-client">Client: DBS Bank — Enterprise Backend Banking</div>
+      <div class="exp-role">SDET</div>
+      <div class="exp-client">Client: DBS Bank — Banking Analytics Backend Platform</div>
       <ul class="exp-bullets">
-        <li>Built a data reconciliation framework for Big Data pipeline validation across Kafka, Redis, and downstream systems — a capability typically seen at the 6–7 year seniority band.</li>
-        <li>Designed SSL/TLS and mTLS security test suites for encrypted API channels in high-security banking environments.</li>
-        <li>Implemented event-driven async validation patterns for Kafka consumer lag monitoring and DLQ testing.</li>
-        <li>Validated real-time data consistency across distributed microservices using EmbeddedKafka and Testcontainers.</li>
+        <li>Designed and maintained automation frameworks (Java, Selenium, Playwright, JUnit, Karate) across UI, API, integration, and regression testing for a distributed banking platform.</li>
+        <li>Automated end-to-end REST API and database validation across upstream/downstream integrations.</li>
+        <li>Built a Karate + Kafka framework for event-driven API validation — first-of-its-kind asset on the engagement.</li>
+        <li>Extended frameworks to validate SSL/TLS and certificate-based authentication for enterprise security gateways.</li>
+        <li>Built Java-based data reconciliation frameworks — field-level validation and integrity checks across Big Data, Kafka, Redis, and relational sources.</li>
+        <li>Owned JMeter performance testing and chaos engineering; root-caused and fixed a critical pre-deadline load test failure, stabilizing a 300 TPS / 3-hour run at sub-1-second p99 latency for a time-boxed sign-off.</li>
+        <li>Used Kibana for periodic log review to support defect RCA; managed defect lifecycle via JIRA-Zephyr.</li>
+        <li>Participated in PPV, rollback testing, and release governance including Flyway schema migration validation.</li>
+        <li>Configured Jenkins (Groovy) pipelines; managed source control via Bitbucket/Git.</li>
+        <li>Mentored 3 junior SDETs to full automation autonomy within 3 months.</li>
       </ul>
       <div class="exp-tags">
         <span class="exp-tag">Kafka</span>
         <span class="exp-tag">Redis</span>
-        <span class="exp-tag">mTLS</span>
-        <span class="exp-tag">Testcontainers</span>
-        <span class="exp-tag">REST Assured</span>
-        <span class="exp-tag">Java</span>
+        <span class="exp-tag">Karate</span>
+        <span class="exp-tag">mTLS / SSL</span>
+        <span class="exp-tag">JMeter</span>
+        <span class="exp-tag">Chaos Testing</span>
+        <span class="exp-tag">Jenkins</span>
       </div>
     </div>
 
@@ -1054,21 +1256,23 @@
     <div class="exp-item past reveal">
       <div class="exp-meta">
         <span class="exp-company">Tata Consultancy Services</span>
-        <span class="exp-period">2020 — 2021</span>
+        <span class="exp-period">MAR 2022 — FEB 2023</span>
       </div>
-      <div class="exp-role">QA Engineer</div>
-      <div class="exp-client">Client: USAA Bank — Core Banking</div>
+      <div class="exp-role">SDET</div>
+      <div class="exp-client">Client: USAA Bank — Core Banking Platform</div>
       <ul class="exp-bullets">
-        <li>Developed automation suites for core banking transaction flows using Selenium WebDriver and Cucumber BDD.</li>
-        <li>Contributed to API testing for banking microservices, establishing REST Assured test patterns used by the team.</li>
-        <li>Mentored junior SDETs on framework best practices, data-driven testing, and CI/CD pipeline integration.</li>
+        <li>Performed manual functional, regression, and exploratory testing for core banking transaction features.</li>
+        <li>Assisted in building and executing a Java-Selenium-Cucumber BDD suite using Page Object Model for regression scenarios.</li>
+        <li>Performed API testing with Postman.</li>
+        <li>Logged and tracked defects via JIRA; participated in triage and daily standups.</li>
+        <li>Maintained test documentation and shared test plans in Confluence.</li>
       </ul>
       <div class="exp-tags">
         <span class="exp-tag">Selenium</span>
         <span class="exp-tag">Cucumber</span>
-        <span class="exp-tag">TestNG</span>
-        <span class="exp-tag">REST Assured</span>
-        <span class="exp-tag">Maven</span>
+        <span class="exp-tag">Postman</span>
+        <span class="exp-tag">JIRA</span>
+        <span class="exp-tag">Confluence</span>
       </div>
     </div>
 
@@ -1079,7 +1283,7 @@
 <section id="projects">
   <div class="section-header reveal">
     <span class="section-tag">04</span>
-    <h2 class="section-title">Personal Projects &amp; Achievements</h2>
+    <h2 class="section-title">Projects &amp; Achievements</h2>
     <div class="section-line"></div>
   </div>
 
@@ -1088,10 +1292,10 @@
     <div class="project-card reveal">
       <div class="proj-header">
         <div class="proj-icon">🏗️</div>
-        <span class="proj-type">Selenium & Restassured UI Framework</span>
+        <span class="proj-type">Framework</span>
       </div>
-      <div class="proj-title">Enterprise Level Selenium Framework</div>
-      <p class="proj-desc"> production-grade framework built from ground up. Covers POM, ThreadLocal WebDriver, parallel Cucumber execution, retry mechanism via IRetryAnalyzer, data-driven testing with Apache POI &amp; Jackson,with Resstaasured for API testing and Session Storage and GitHub Actions automatic builds.</p>
+      <div class="proj-title">Enterprise-Level Selenium &amp; REST Assured Framework</div>
+      <p class="proj-desc">A production-grade personal project framework built from the ground up. Covers POM, ThreadLocal WebDriver, parallel Cucumber execution, a retry mechanism via IRetryAnalyzer, data-driven testing with Apache POI &amp; Jackson, REST Assured API layer, and GitHub Actions automated builds.</p>
       <div class="proj-impact">↑ 85% test coverage | Zero flaky test escapes</div>
       <div class="proj-stack">
         <span class="proj-tag">Java</span>
@@ -1107,19 +1311,17 @@
 
     <div class="project-card reveal">
       <div class="proj-header">
-        <div class="proj-icon">📧</div>
-        <span class="proj-type">Compliance</span>
+        <div class="proj-icon">⚡</div>
+        <span class="proj-type">Performance / Chaos</span>
       </div>
-      <div class="proj-title">GMF Email Compliance Suite</div>
-      <p class="proj-desc">Full test plan (GMF-EMAIL-DDC-001) for Due Date Change email flows. Multi-layer coverage: UI automation, API contract testing, CFPB/TILA &amp; CAN-SPAM compliance, SPF/DKIM/DMARC deliverability, and complete audit trail validation.</p>
-      <div class="proj-impact">Regulatory sign-off for GMF production releases</div>
+      <div class="proj-title">DBS Performance &amp; Chaos Engineering Sign-off</div>
+      <p class="proj-desc">Owned JMeter performance testing for DBS Bank's backend platform. Root-caused and fixed a critical load-test failure ahead of a hard deadline, stabilizing a 300 TPS run over 1 hour at sub-1-second p99 latency.</p>
+      <div class="proj-impact">Clean 300 TPS sign-off ahead of schedule</div>
       <div class="proj-stack">
-        <span class="proj-tag">REST Assured</span>
-        <span class="proj-tag">Selenium</span>
-        <span class="proj-tag">CFPB/TILA</span>
-        <span class="proj-tag">CAN-SPAM</span>
-        <span class="proj-tag">SPF/DKIM</span>
-        <span class="proj-tag">HikariCP</span>
+        <span class="proj-tag">JMeter</span>
+        <span class="proj-tag">Chaos Testing</span>
+        <span class="proj-tag">Grafana</span>
+        <span class="proj-tag">Kibana</span>
       </div>
     </div>
 
@@ -1128,16 +1330,14 @@
         <div class="proj-icon">🔄</div>
         <span class="proj-type">Big Data QA</span>
       </div>
-      <div class="proj-title">Kafka Pipeline Reconciliation Framework</div>
-      <p class="proj-desc">Data reconciliation framework for DBS Bank validating message integrity across Kafka topics, Redis caches, and downstream databases. Async consumer lag monitoring, DLQ testing, and event-driven validation patterns.</p>
+      <div class="proj-title">Karate + Kafka Event-Driven Validation Framework</div>
+      <p class="proj-desc">First-of-its-kind framework on the project tribe of DBS engagement combining Karate with Kafka for event-driven API validation. Extended into a broader Java data reconciliation framework — field-level checks across Big Data, Kafka, Redis, and relational sources.</p>
       <div class="proj-impact">Real-time consistency across distributed microservices</div>
       <div class="proj-stack">
+        <span class="proj-tag">Karate</span>
         <span class="proj-tag">Apache Kafka</span>
         <span class="proj-tag">Redis</span>
-        <span class="proj-tag">EmbeddedKafka</span>
-        <span class="proj-tag">Testcontainers</span>
         <span class="proj-tag">Java</span>
-        <span class="proj-tag">Pact</span>
       </div>
     </div>
 
@@ -1146,15 +1346,14 @@
         <div class="proj-icon">🔐</div>
         <span class="proj-type">Security QA</span>
       </div>
-      <div class="proj-title">SSL/TLS &amp; mTLS Security Test Suite</div>
-      <p class="proj-desc">Comprehensive security testing framework for encrypted API channels at DBS Bank. Certificate validation, mutual TLS handshake testing, cipher suite coverage, and automated regression for encrypted banking microservice endpoints.</p>
+      <div class="proj-title">SSL/TLS &amp; Certificate-Based Auth Test Suite</div>
+      <p class="proj-desc">Security testing framework for encrypted API channels and enterprise security gateways at DBS Bank. Certificate validation, JKS keystore handling, and automated regression for encrypted banking microservice endpoints.</p>
       <div class="proj-impact">Zero security escapes in production releases</div>
       <div class="proj-stack">
-        <span class="proj-tag">mTLS</span>
         <span class="proj-tag">SSL/TLS</span>
+        <span class="proj-tag">JKS Keystores</span>
         <span class="proj-tag">REST Assured</span>
         <span class="proj-tag">Java</span>
-        <span class="proj-tag">Postman</span>
       </div>
     </div>
 
@@ -1178,19 +1377,32 @@
     <div class="project-card reveal">
       <div class="proj-header">
         <div class="proj-icon">📚</div>
-        <span class="proj-type">Content / Teaching</span>
+        <span class="proj-type">Mentorship</span>
       </div>
-      <div class="proj-title">SDET Educational Series</div>
-      <p class="proj-desc">Published "Java for SDETs" infographic series — Part 8 covers Apache Kafka from a QA perspective: EmbeddedKafka, Testcontainers, DLQ, contract testing with Pact, CI/CD best practices. Designed for junior SDET mentorship and knowledge sharing.</p>
-      <div class="proj-impact">Community knowledge sharing for QA engineers</div>
+      <div class="proj-title">Mentored 3 Junior SDETs to Automation Autonomy</div>
+      <p class="proj-desc">Coached and ramped up 3 junior SDETs on the DBS engagement — framework design, data-driven testing, and CI/CD pipeline integration — bringing each to full automation autonomy within 3 months.</p>
+      <div class="proj-impact">3 engineers reached full autonomy in 3 months</div>
       <div class="proj-stack">
-        <span class="proj-tag">Technical Writing</span>
-        <span class="proj-tag">Kafka</span>
-        <span class="proj-tag">Pact</span>
         <span class="proj-tag">Mentorship</span>
+        <span class="proj-tag">Framework Design</span>
+        <span class="proj-tag">CI/CD</span>
       </div>
     </div>
 
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-header reveal">
+    <span class="section-tag">05</span>
+    <h2 class="section-title">Education</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="edu-card reveal">
+    <div class="edu-degree">Bachelor of Engineering (B.E.)</div>
+    <div class="edu-school">University College of Engineering, Osmania University, Hyderabad</div>
+    <!-- <div class="edu-cgpa">CGPA: 8.76 / 10</div> -->
   </div>
 </section>
 
@@ -1198,7 +1410,7 @@
 <section id="contact">
   <div class="contact-inner">
     <div class="section-header reveal" style="justify-content:center; margin-bottom:16px;">
-      <span class="section-tag">05</span>
+      <span class="section-tag">06</span>
       <h2 class="section-title">Contact</h2>
     </div>
     <p class="contact-tagline reveal">
@@ -1210,8 +1422,11 @@
       AVAILABLE — Q3 2026 TARGET
     </div>
     <div class="contact-links reveal">
-      <a href="mailto:saikirandasari314@email.com" class="contact-link">
+      <a href="mailto:saikirandasari314@gmail.com" class="contact-link">
         <span class="contact-link-icon">✉</span> EMAIL
+      </a>
+      <a href="tel:+919640705150" class="contact-link">
+        <span class="contact-link-icon">☎</span> +91 96407 05150
       </a>
       <a href="https://www.linkedin.com/in/saikiran-dasari-8093a2140/" class="contact-link" target="_blank">
         <span class="contact-link-icon">in</span> LINKEDIN
@@ -1219,13 +1434,7 @@
       <a href="https://github.com/saikiran2048/" class="contact-link" target="_blank">
         <span class="contact-link-icon">⌥</span> GITHUB
       </a>
-      <a href="#" class="contact-link">
-        <span class="contact-link-icon">↓</span> RESUME
-      </a>
     </div>
-    <!-- <p class="reveal" style="font-family:var(--mono); font-size:11px; color:var(--text-dim); margin-top:20px;">
-      Priority targets: Experian GIC · Citi CGIT · Synchrony · JP Morgan · Walmart GTC
-    </p> -->
   </div>
 </section>
 
@@ -1261,6 +1470,20 @@
     }
   };
   setTimeout(type, 600);
+
+  // Mobile nav toggle
+  const navToggle = document.getElementById('navToggle');
+  const navMenu = document.getElementById('navMenu');
+  navToggle.addEventListener('click', () => {
+    navToggle.classList.toggle('open');
+    navMenu.classList.toggle('open');
+  });
+  navMenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      navToggle.classList.remove('open');
+      navMenu.classList.remove('open');
+    });
+  });
 </script>
 </body>
 </html>
